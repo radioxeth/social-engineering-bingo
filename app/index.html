@@ -10,6 +10,10 @@
             font-family: Arial, sans-serif;
         }
 
+        input[type="checkbox"] {
+            display: none;
+        }
+
         #bingo-container {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -22,6 +26,16 @@
             padding: 10px;
             text-align: center;
             background: #f9f9f9;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1 / 1;
+        }
+
+        .bingo-item.checked {
+            background-color: green;
+            color: white;
         }
 
         #reset-button {
@@ -36,6 +50,25 @@
         #reset-button:hover {
             background: #0056b3;
         }
+
+        /* 
+        @media (max-width: 600px) {
+            #bingo-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 601px) and (max-width: 1000px) {
+            #bingo-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (min-width: 1001px) {
+            #bingo-container {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        } */
     </style>
 </head>
 
@@ -88,6 +121,9 @@
                 const checkboxes = document.querySelectorAll('.bingo-item input[type="checkbox"]')
                 checkboxes.forEach((checkbox, index) => {
                     checkbox.checked = state[index]
+                    if (checkbox.checked) {
+                        checkbox.parentElement.classList.add('checked')
+                    }
                 })
             }
         }
@@ -99,17 +135,27 @@
             }
         }
 
+        function handleCheckboxChange(event) {
+            const checkbox = event.target
+            if (checkbox.checked) {
+                checkbox.parentElement.classList.add('checked')
+            } else {
+                checkbox.parentElement.classList.remove('checked')
+            }
+            saveState()
+        }
+
         function createBingoCard() {
             bingoContainer.innerHTML = ''
             shuffle(phrases)
             phrases.forEach(phrase => {
-                const item = document.createElement('div')
+                const item = document.createElement('label')
                 item.className = 'bingo-item'
                 item.innerHTML = `
+                    ${phrase}
                     <input type="checkbox" id="${phrase}">
-                    <label for="${phrase}">${phrase}</label>
                 `
-                item.querySelector('input').addEventListener('change', saveState)
+                item.querySelector('input').addEventListener('change', handleCheckboxChange)
                 bingoContainer.appendChild(item)
             })
         }
