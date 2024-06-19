@@ -37,19 +37,6 @@ function saveState() {
     localStorage.setItem('bingoState', JSON.stringify(state))
 }
 
-function loadState() {
-    const state = JSON.parse(localStorage.getItem('bingoState'))
-    if (state) {
-        const checkboxes = document.querySelectorAll('.bingo-item input[type="checkbox"]')
-        checkboxes.forEach((checkbox, index) => {
-            checkbox.checked = state[index].checked
-            if (checkbox.checked) {
-                checkbox.parentElement.classList.add('checked')
-            }
-        })
-    }
-}
-
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -67,12 +54,8 @@ function handleCheckboxChange(event) {
     saveState()
 }
 
-function createBingoCard() {
-    bingoContainer.innerHTML = ''
-    // shuffle the squares only if there is no saved state
-    if (!localStorage.getItem('bingoState')) {
-        shuffle(squares)
-    }
+function newBingoCard() {
+    shuffle(squares)
     squares.forEach(square => {
         const item = document.createElement('label')
         item.className = 'bingo-item'
@@ -85,6 +68,35 @@ function createBingoCard() {
     })
 }
 
+function restoreBingoCard() {
+    const state = JSON.parse(localStorage.getItem('bingoState'))
+    state.forEach(square => {
+        const item = document.createElement('label')
+        item.className = 'bingo-item'
+        item.innerHTML = `
+            ${square.phrase}
+            <input type="checkbox" id="${square.phrase}">
+        `
+        item.querySelector('input').addEventListener('change', handleCheckboxChange)
+        if (square.checked) {
+            item.classList.add('checked')
+            item.querySelector('input').checked = true
+        }
+        bingoContainer.appendChild(item)
+    })
+}
+
+function createBingoCard() {
+    bingoContainer.innerHTML = ''
+    // shuffle the squares only if there is no saved state
+    if (!localStorage.getItem('bingoState')) {
+        newBingoCard()
+    } else {
+        restoreBingoCard()
+    }
+
+}
+
 resetButton.addEventListener('click', () => {
     localStorage.removeItem('bingoState')
     createBingoCard()
@@ -92,5 +104,4 @@ resetButton.addEventListener('click', () => {
 
 window.addEventListener('load', () => {
     createBingoCard()
-    loadState()
 })
