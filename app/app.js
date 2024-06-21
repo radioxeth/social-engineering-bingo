@@ -40,11 +40,44 @@ function saveState() {
     localStorage.setItem('bingoState', JSON.stringify(state))
 }
 
+
 function shuffle(array) {
     for (let i = 24; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]]
     }
+}
+
+function checkBingo() {
+    const checkboxes = document.querySelectorAll('.bingo-item input[type="checkbox"]')
+    const state = Array.from(checkboxes).map(checkbox => ({ phrase: checkbox.id, checked: checkbox.checked }))
+    for (i = 0; i < 5; i++) {
+        // check rows
+        const row = state.slice(i * 5, i * 5 + 5)
+        const checked = row.filter(checkbox => checkbox.checked)
+        if (checked.length === 5) {
+            return { isBingo: true, squares: row, type: 'row' }
+        }
+        // check columns
+        const column = state.filter((checkbox, index) => index % 5 === i)
+        const checkedColumn = column.filter(checkbox => checkbox.checked)
+        if (checkedColumn.length === 5) {
+            return { isBingo: true, squares: column, type: 'column' }
+        }
+
+    }
+    // check diagonals
+    const diagonal1 = state.filter((checkbox, index) => index % 6 === 0)
+    const checkedDiagonal1 = diagonal1.filter(checkbox => checkbox.checked)
+    const diagonal2 = state.filter((checkbox, index) => index % 4 === 0 && index > 0 && index < 21)
+    const checkedDiagonal2 = diagonal2.filter(checkbox => checkbox.checked)
+    if (checkedDiagonal1.length === 5) {
+        return { isBingo: true, squares: diagonal1, type: 'diagonal' }
+    }
+    if (checkedDiagonal2.length === 5) {
+        return { isBingo: true, squares: diagonal2, type: 'diagonal' }
+    }
+    return { isBingo: false, squares: [], type: '' }
 }
 
 function handleCheckboxChange(event) {
@@ -55,6 +88,46 @@ function handleCheckboxChange(event) {
         checkbox.parentElement.classList.remove('checked')
     }
     saveState()
+    const { isBingo, squares, type } = checkBingo()
+    if (isBingo) {
+        celebrateBingo(squares, type)
+    } else {
+        removeCelebration()
+    }
+
+}
+
+function removeCelebration() {
+    const items = document.querySelectorAll('.bingo-item')
+    items.forEach(item => {
+        item.classList.remove('celebrate-row')
+        item.classList.remove('celebrate-column')
+        item.classList.remove('celebrate-spin')
+    })
+}
+
+function celebrateBingo(squares, type) {
+    squares.forEach((square, index) => {
+        const item = document.getElementById(square.phrase)
+        const spintime = 1000
+        const delay = (index * spintime) / 5 // Delay for each square
+
+        // Set a timeout to add the class after a delay
+        setTimeout(() => {
+            if (type === 'row') {
+                item.parentElement.classList.add('celebrate-row')
+            } else if (type === 'column') {
+                item.parentElement.classList.add('celebrate-column')
+            } else if (type === 'diagonal') {
+                item.parentElement.classList.add('celebrate-column')
+            }
+
+            item.parentElement.classList.add('celebrate-spin')
+            setTimeout(() => {
+                item.parentElement.classList.remove('celebrate-spin')
+            }, spintime)
+        }, delay)
+    })
 }
 
 function newBingoCard() {
@@ -100,6 +173,11 @@ function createBingoCard() {
         newBingoCard()
     } else {
         restoreBingoCard()
+        const { isBingo, squares, type } = checkBingo()
+        if (isBingo) {
+            celebrateBingo(squares, type)
+        }
+
     }
 }
 
