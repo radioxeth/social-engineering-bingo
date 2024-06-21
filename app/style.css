@@ -67,7 +67,7 @@ h1 {
     background: linear-gradient(to right, red, orange, yellow, green, blue, violet, blue, green, yellow, orange, red);
     /* background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet); */
     background-size: 1100% 100%;
-    animation: gradient-row 60s linear infinite;
+    animation: gradient-row 55s linear infinite;
 }
 
 @keyframes gradient-row {
@@ -87,7 +87,7 @@ h1 {
     /* add a vertical roygbiv gradient that animates to the bottom repeating infinitely */
     background: linear-gradient(to bottom, red, orange, yellow, green, blue, violet, blue, green, yellow, orange, red);
     background-size: 100% 1100%;
-    animation: gradient-column 45s linear infinite;
+    animation: gradient-column 55s linear infinite;
 }
 
 @keyframes gradient-column {
