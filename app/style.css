@@ -67,7 +67,7 @@ h1 {
     background: linear-gradient(to right, red, orange, yellow, green, blue, violet, blue, green, yellow, orange, red);
     /* background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet); */
     background-size: 1100% 100%;
-    animation: gradient-row 45s linear infinite;
+    animation: gradient-row 60s linear infinite;
 }
 
 @keyframes gradient-row {
