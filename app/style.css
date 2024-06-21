@@ -31,7 +31,7 @@ h1 {
     padding: 5px;
     text-align: center;
     background: #f9f9f9;
-    transition: background-color 0.5;
+    transition: background-color 0.3s;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -102,11 +102,11 @@ h1 {
 
 /*spin*/
 
-.celebrate-spin {
-    animation: spin 1s linear infinite;
+.celebrate-spin-right {
+    animation: spin-right 1s linear infinite;
 }
 
-@keyframes spin {
+@keyframes spin-right {
     0% {
         transform: rotate(0deg);
         opacity: 1;
@@ -114,6 +114,22 @@ h1 {
 
     100% {
         transform: rotate(360deg);
+        opacity: 1;
+    }
+}
+
+.celebrate-spin-left {
+    animation: spin-left 1s linear infinite;
+}
+
+@keyframes spin-left {
+    0% {
+        transform: rotate(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: rotate(-360deg);
         opacity: 1;
     }
 }

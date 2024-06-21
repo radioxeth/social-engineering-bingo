@@ -72,10 +72,10 @@ function checkBingo() {
     const diagonal2 = state.filter((checkbox, index) => index % 4 === 0 && index > 0 && index < 21)
     const checkedDiagonal2 = diagonal2.filter(checkbox => checkbox.checked)
     if (checkedDiagonal1.length === 5) {
-        return { isBingo: true, squares: diagonal1, type: 'diagonal' }
+        return { isBingo: true, squares: diagonal1, type: 'diagonal1' }
     }
     if (checkedDiagonal2.length === 5) {
-        return { isBingo: true, squares: diagonal2, type: 'diagonal' }
+        return { isBingo: true, squares: diagonal2, type: 'diagonal2' }
     }
     return { isBingo: false, squares: [], type: '' }
 }
@@ -102,32 +102,43 @@ function removeCelebration() {
     items.forEach(item => {
         item.classList.remove('celebrate-row')
         item.classList.remove('celebrate-column')
-        item.classList.remove('celebrate-spin')
+        item.classList.remove('celebrate-spin-right')
+        item.classList.remove('celebrate-spin-left')
     })
 }
 
 function celebrateBingo(squares, type) {
-    squares.forEach((square, index) => {
-        const item = document.getElementById(square.phrase)
-        const spintime = 1000
-        const delay = (index * spintime) / 5 // Delay for each square
+    setTimeout(() => {
+        squares.forEach((square, index) => {
+            const item = document.getElementById(square.phrase)
+            const spintime = 1000
+            const delay = (index * spintime) / 5 // Delay for each square
 
-        // Set a timeout to add the class after a delay
-        setTimeout(() => {
-            if (type === 'row') {
-                item.parentElement.classList.add('celebrate-row')
-            } else if (type === 'column') {
-                item.parentElement.classList.add('celebrate-column')
-            } else if (type === 'diagonal') {
-                item.parentElement.classList.add('celebrate-column')
-            }
-
-            item.parentElement.classList.add('celebrate-spin')
+            // Set a timeout to add the class after a delay
             setTimeout(() => {
-                item.parentElement.classList.remove('celebrate-spin')
-            }, spintime)
-        }, delay)
-    })
+                if (type === 'row') {
+                    item.parentElement.classList.add('celebrate-row')
+                    item.parentElement.classList.add('celebrate-spin-right')
+                } else if (type === 'column') {
+                    item.parentElement.classList.add('celebrate-column')
+                    item.parentElement.classList.add('celebrate-spin-right')
+                } else if (type === 'diagonal1') {
+                    item.parentElement.classList.add('celebrate-column')
+                    item.parentElement.classList.add('celebrate-spin-right')
+                } else if (type === 'diagonal2') {
+                    item.parentElement.classList.add('celebrate-column')
+                    item.parentElement.classList.add('celebrate-spin-left')
+                }
+
+
+                setTimeout(() => {
+                    item.parentElement.classList.remove('celebrate-spin-right')
+                    item.parentElement.classList.remove('celebrate-spin-left')
+                }, spintime)
+            }, delay)
+        })
+    }, 300)
+
 }
 
 function newBingoCard() {
