@@ -3,60 +3,17 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Engineering Bingo</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        input[type="checkbox"] {
-            display: none;
-        }
-
-        #bingo-container {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-            margin: 20px;
-        }
-
-        .bingo-item {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: center;
-            background: #f9f9f9;
-            transition: background-color 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            aspect-ratio: 1 / 1;
-        }
-
-        .bingo-item.checked {
-            background-color: green;
-            color: white;
-        }
-
-        #reset-button {
-            margin: 20px;
-            padding: 10px 20px;
-            background: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        #reset-button:hover {
-            background: #0056b3;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <title>Summer Solstice Bingo</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <h1>Social Engineering Bingo</h1>
+    <h1 class="center-text">Summer Solstice Bingo</h1>
     <div id="bingo-container"></div>
-    <button id="reset-button">Reset</button>
+    <div class="button-container">
+        <button id="reset-button">Clear and Shuffle</button>
+    </div>
     <script src="app.js"></script>
 </body>
 
