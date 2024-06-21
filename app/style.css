@@ -64,15 +64,16 @@ h1 {
 /*row*/
 .celebrate-row {
     /* add a horizontal roygbiv gradient that animates to the right repeating infinitely */
-    background: linear-gradient(to right, red, orange, yellow, green, blue, violet, blue, green, yellow, orange, red);
-    /* background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet); */
-    background-size: 1100% 100%;
-    animation: gradient-row 55s linear infinite;
+    /* background: linear-gradient(to right, red, orange, yellow, green, blue, violet, blue, green, yellow, orange, red); */
+    /*start at green*/
+    background: linear-gradient(to right, green, blue, violet, red, orange, yellow, orange, red, violet, blue, green);
+    background-size: 4400% 100%;
+    animation: gradient-row 440s linear infinite;
 }
 
 @keyframes gradient-row {
     0% {
-        background-position: 1100% 0%;
+        background-position: 4400% 0%;
     }
 
     100% {
@@ -85,14 +86,14 @@ h1 {
 /*column*/
 .celebrate-column {
     /* add a vertical roygbiv gradient that animates to the bottom repeating infinitely */
-    background: linear-gradient(to bottom, red, orange, yellow, green, blue, violet, blue, green, yellow, orange, red);
-    background-size: 100% 1100%;
-    animation: gradient-column 55s linear infinite;
+    background: linear-gradient(to bottom, green, blue, violet, red, orange, yellow, orange, red, violet, blue, green);
+    background-size: 100% 4400%;
+    animation: gradient-column 440s linear infinite;
 }
 
 @keyframes gradient-column {
     0% {
-        background-position: 0% 1100%;
+        background-position: 0% 4400%;
     }
 
     100% {
