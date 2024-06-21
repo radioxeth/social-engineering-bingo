@@ -108,36 +108,34 @@ function removeCelebration() {
 }
 
 function celebrateBingo(squares, type) {
-    setTimeout(() => {
-        squares.forEach((square, index) => {
-            const item = document.getElementById(square.phrase)
-            const spintime = 1000
-            const delay = (index * spintime) / 5 // Delay for each square
+    squares.forEach((square, index) => {
+        const item = document.getElementById(square.phrase)
+        const spintime = 1000
+        const delay = (index * spintime) / 5 // Delay for each square
 
-            // Set a timeout to add the class after a delay
+        // Set a timeout to add the class after a delay
+        setTimeout(() => {
+            if (type === 'row') {
+                item.parentElement.classList.add('celebrate-row')
+                item.parentElement.classList.add('celebrate-spin-right')
+            } else if (type === 'column') {
+                item.parentElement.classList.add('celebrate-column')
+                item.parentElement.classList.add('celebrate-spin-right')
+            } else if (type === 'diagonal1') {
+                item.parentElement.classList.add('celebrate-column')
+                item.parentElement.classList.add('celebrate-spin-right')
+            } else if (type === 'diagonal2') {
+                item.parentElement.classList.add('celebrate-column')
+                item.parentElement.classList.add('celebrate-spin-left')
+            }
+
+
             setTimeout(() => {
-                if (type === 'row') {
-                    item.parentElement.classList.add('celebrate-row')
-                    item.parentElement.classList.add('celebrate-spin-right')
-                } else if (type === 'column') {
-                    item.parentElement.classList.add('celebrate-column')
-                    item.parentElement.classList.add('celebrate-spin-right')
-                } else if (type === 'diagonal1') {
-                    item.parentElement.classList.add('celebrate-column')
-                    item.parentElement.classList.add('celebrate-spin-right')
-                } else if (type === 'diagonal2') {
-                    item.parentElement.classList.add('celebrate-column')
-                    item.parentElement.classList.add('celebrate-spin-left')
-                }
-
-
-                setTimeout(() => {
-                    item.parentElement.classList.remove('celebrate-spin-right')
-                    item.parentElement.classList.remove('celebrate-spin-left')
-                }, spintime)
-            }, delay)
-        })
-    }, 300)
+                item.parentElement.classList.remove('celebrate-spin-right')
+                item.parentElement.classList.remove('celebrate-spin-left')
+            }, spintime)
+        }, delay)
+    })
 
 }
 
